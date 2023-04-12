@@ -31,6 +31,6 @@ public class ChangeText : MonoBehaviour
     {
         string newText = "Hello World";
         thetext.text = newText;
-        Debug.Log("Text changed to " + newText);
+        Debug.Log("Text changed to: " + newText);
     }
 }
