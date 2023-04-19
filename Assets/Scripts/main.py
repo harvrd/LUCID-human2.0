@@ -5,9 +5,11 @@ import time
 import os
 from langchain.text_splitter import CharacterTextSplitter
 import UdpComms as U
+from dotenv import load_dotenv
+
+load_dotenv()
 
 sock = U.UdpComms(udpIP="127.0.0.1", portTX=8000, portRX=8001, enableRX=True, suppressWarnings=True)
-
 
 # Set up OpenAI API key
 openai.api_key = os.environ.get("OPENAI_API_KEY")
@@ -118,7 +120,7 @@ Interviewee: You're welcome."""
     return conversation
 
 # Define the three different prompts
-prompt1 = "Summarize the last 5 messages into a short paragraph"
+prompt1 = "Summarize the last 5 messages into a short paragraph."
 prompt2 = "Fact check the last 5 messages. Please point out any possible assumptions or errors."
 prompt3 = "Give ideas on how to keep the conversation going, or useful points to bring up."
 
@@ -127,11 +129,12 @@ text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=3800, chu
 
 def getHelp(user_input):
     # Get Current Conversation
+    print("eh")
     conversation = getLatestConversation()
     texts = text_splitter.split_text(conversation)
     # get last element of texts
     conversationCut = texts[-1]
-
+    print("lsdkf")
     # Get the response based on the user's input
     if user_input == 1:
         prompt = prompt1
@@ -146,10 +149,17 @@ def getHelp(user_input):
     # Get the model's response to the chosen prompt
     print("Thinking...")
     fullPrompt = "\"\"\"" + conversationCut + "\"\"\"\n" + prompt
-    print(fullPrompt)
+    # print(fullPrompt)
     return getChatResponse(fullPrompt)
 
+
+result = "PC connected. No messages. Send a thought!"
 result = getHelp(1)
 print(result)
 
-sock.SendData(result)
+i = 0
+while True:
+    i = i+1
+    bruh = input("press a key to continue")
+    sock.SendData(bruh + result + str(i))
+    time.sleep(1)
