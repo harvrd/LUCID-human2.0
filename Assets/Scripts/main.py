@@ -20,7 +20,7 @@ def getChatResponse(prompt):
     response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages = [
-            {"role": "system", "content": "This is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. Assistant is listening to a conversation between two people, and is instructed to assist the user in conversation in 1. summarizing conversation 2. fact checking 3. ideation. The conversation is below"},
+            {"role": "system", "content": "This is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. The assistant is listening to a conversation between two people where Speaker 1 is asking questions and Speaker 2 is answering. The AI assistant is instructed to assist Speaker 2 in this conversation with 1. summarizing conversation 2. fact checking 3. ideation. The conversation is below"},
             {"role": "user", "content": prompt}
             ]
     )
