@@ -152,10 +152,10 @@ def getHelp(user_input):
     full_string = ""
     for chunk in openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=[{
-            "role": "user",
-            "content": "Generate a list of 20 great names for sentient cheesecakes that teach SQL"
-        }],
+        messages=[
+            {"role": "system", "content": "This is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. Assistant is listening to a conversation between two people, and is instructed to assist the user in conversation in 1. summarizing conversation 2. fact checking 3. ideation. The conversation is below"},
+            {"role": "user", "content": fullPrompt}
+        ],
         stream=True,
     ):
         content = chunk["choices"][0].get("delta", {}).get("content")
@@ -163,7 +163,7 @@ def getHelp(user_input):
         sock.SendData(full_string)
         if content is not None:
             print(content, end='')
-    return getChatResponse(fullPrompt)
+    return full_string
 
 
 # result = "PC connected. No messages. Send a thought!"
@@ -171,8 +171,10 @@ def getHelp(user_input):
 # print(result)
 
 i = 0
+sock.SendData("Project LUCID: Please Enter a Thought Command.")
+
 while True:
     i = i+1
     bruh = input("press a key to continue")
-    sock.SendData(bruh + str(i))
+    print(getHelp(1))
     time.sleep(1)
