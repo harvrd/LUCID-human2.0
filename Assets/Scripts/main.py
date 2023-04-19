@@ -149,17 +149,30 @@ def getHelp(user_input):
     # Get the model's response to the chosen prompt
     print("Thinking...")
     fullPrompt = "\"\"\"" + conversationCut + "\"\"\"\n" + prompt
-    # print(fullPrompt)
+    full_string = ""
+    for chunk in openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[{
+            "role": "user",
+            "content": "Generate a list of 20 great names for sentient cheesecakes that teach SQL"
+        }],
+        stream=True,
+    ):
+        content = chunk["choices"][0].get("delta", {}).get("content")
+        full_string += content
+        sock.SendData(full_string)
+        if content is not None:
+            print(content, end='')
     return getChatResponse(fullPrompt)
 
 
-result = "PC connected. No messages. Send a thought!"
-result = getHelp(1)
-print(result)
+# result = "PC connected. No messages. Send a thought!"
+# result = getHelp(1)
+# print(result)
 
 i = 0
 while True:
     i = i+1
     bruh = input("press a key to continue")
-    sock.SendData(bruh + result + str(i))
+    sock.SendData(bruh + str(i))
     time.sleep(1)
