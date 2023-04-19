@@ -13,6 +13,7 @@ sock = U.UdpComms(udpIP="127.0.0.1", portTX=8000, portRX=8001, enableRX=True, su
 
 # Set up OpenAI API key
 openai.api_key = os.environ.get("OPENAI_API_KEY")
+print("key", os.environ.get("OPENAI_API_KEY"))
 
 # Define a function to get the model's response to a prompt
 def getChatResponse(prompt):
