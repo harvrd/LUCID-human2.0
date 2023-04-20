@@ -6,14 +6,17 @@ import os
 from langchain.text_splitter import CharacterTextSplitter
 import UdpComms as U
 from dotenv import load_dotenv
+import key
 
-load_dotenv()
+# load_dotenv()
 
 sock = U.UdpComms(udpIP="127.0.0.1", portTX=8000, portRX=8001, enableRX=True, suppressWarnings=True)
 
 # Set up OpenAI API key
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-print("key", os.environ.get("OPENAI_API_KEY"))
+# openai.api_key = os.environ.get("OPENAI_API_KEY")
+# print("key", os.environ.get("OPENAI_API_KEY"))
+
+openai.api_key = key.key()
 
 # Define a function to get the model's response to a prompt
 def getChatResponse(prompt):
@@ -160,9 +163,9 @@ def getHelp(user_input):
         stream=True,
     ):
         content = chunk["choices"][0].get("delta", {}).get("content")
-        full_string += content
-        sock.SendData(full_string)
         if content is not None:
+            full_string += content
+            sock.SendData(full_string)
             print(content, end='')
     return full_string
 
