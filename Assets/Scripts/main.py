@@ -2,7 +2,6 @@
 
 import openai
 import time
-import os
 from langchain.text_splitter import CharacterTextSplitter
 import UdpComms as U
 from dotenv import load_dotenv
