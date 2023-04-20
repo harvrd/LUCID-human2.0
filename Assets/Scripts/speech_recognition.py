@@ -82,7 +82,7 @@ async def send_receive():
 
 				except Exception as e:
 					assert False, "Not a websocket 4008 error"
-				with open("transcript.txt", "w") as file:
+				with open("Assets/Scripts/transcript.txt", "w") as file:
 					file.write(full_transcript)
 
 	  
