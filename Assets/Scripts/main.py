@@ -20,9 +20,9 @@ openai.api_key = key.key()
 # Define a function to get the model's response to a prompt
 def getChatResponse(prompt):
     response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
+    model="gpt-4",
     messages = [
-            {"role": "system", "content": "You are Assistant. Assistant is listening to a conversation between two people, and is instructed to assist the user in conversation in 1. summarizing conversation 2. fact checking 3. ideation. The conversation is below"},
+            {"role": "system", "content": "You are Assistant. Assistant is listening to a conversation between two people, and is instructed to assist the user in conversation. The conversation is below:"},
             {"role": "user", "content": prompt}
             ]
     )
@@ -125,8 +125,8 @@ def getLatestConversation():
 
 # Define the three different prompts
 prompt1 = "Summarize the latest important points into a short paragraph."
-prompt2 = "Fact check the last 5 messages. Please point out any possible assumptions or errors."
-prompt3 = "Based on the last couple sentences, Give ideas on how to keep the conversation going, or useful points to bring up. Short, concise, under 100 words"
+prompt2 = "Fact check the last 5 sentences. Please point out any possible assumptions or errors."
+prompt3 = "Provide relevant information to assist the user in this conversation in a concise bulleted response between 75-100 words."
 
 text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=3800, chunk_overlap=0)
 
