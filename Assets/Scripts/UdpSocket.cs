@@ -30,19 +30,39 @@ public class UdpSocket : MonoBehaviour
     string text;
     public GameObject changingText;
     TextMeshPro thetext;
+    public Color Entercolor;
+    public Color Selectcolor;
+    public Color Exitcolor;
     // Start is called before the first frame update
+
+    // public GameObject cube1;
+    // public GameObject cube2;
+    // public GameObject cube3;
     void Start()
     {
         Debug.Log("starting");
         thetext = changingText.GetComponent<TextMeshPro>();
-        Debug.Log("done");
-
     }
     void Update ()
     {
         thetext.text = text;
     }
 
+    public void ColorEnter(GameObject objectName)
+    {
+        objectName.GetComponent<Renderer>().material.color = Entercolor;
+
+    }
+    public void ColorSelect(GameObject objectName)
+    {
+        objectName.GetComponent<Renderer>().material.color = Selectcolor;
+
+    }
+    public void ColorExit(GameObject objectName)
+    {
+        objectName.GetComponent<Renderer>().material.color = Exitcolor;
+
+    }
     public void ChangeTextTo(string newText)
     {
         // newText = "fsdf";
@@ -65,15 +85,15 @@ public class UdpSocket : MonoBehaviour
     IPEndPoint remoteEndPoint;
     Thread receiveThread; // Receiving Thread
 
-    IEnumerator SendDataCoroutine() // DELETE THIS: Added to show sending data from Unity to Python via UDP
-    {
-        while (true)
-        {
-            SendData("Sent from Unity: " + i.ToString());
-            i++;
-            yield return new WaitForSeconds(1f);
-        }
-    }
+    // IEnumerator SendDataCoroutine() // DELETE THIS: Added to show sending data from Unity to Python via UDP
+    // {
+    //     while (true)
+    //     {
+    //         SendData("Sent from Unity: " + i.ToString());
+    //         i++;
+    //         yield return new WaitForSeconds(1f);
+    //     }
+    // }
 
     public void SendData(string message) // Use to send data to Python
     {

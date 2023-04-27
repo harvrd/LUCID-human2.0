@@ -20,7 +20,7 @@ openai.api_key = key.key()
 # Define a function to get the model's response to a prompt
 def getChatResponse(prompt):
     response = openai.ChatCompletion.create(
-    model="gpt-4",
+    model="gpt-3.5-turbo",
     messages = [
             {"role": "system", "content": "You are Assistant. Assistant is listening to a conversation between two people, and is instructed to assist the user in conversation. The conversation is below:"},
             {"role": "user", "content": prompt}
@@ -126,7 +126,7 @@ def getLatestConversation():
 # Define the three different prompts
 prompt1 = "Summarize the latest important points into a short paragraph."
 prompt2 = "Fact check the last 5 sentences. Please point out any possible assumptions or errors."
-prompt3 = "Provide relevant information to assist the user in this conversation in a concise bulleted response between 75-100 words."
+prompt3 = "Ideate based on the last few sentences to assist the user in this conversation in a concise bulleted response between 75-100 words."
 
 text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=3800, chunk_overlap=0)
 
@@ -139,15 +139,15 @@ def getHelp(user_input):
     # get last element of texts
     conversationCut = texts[-1]
     # Get the response based on the user's input
-    if user_input == 1:
+    if user_input == "1":
         prompt = prompt1
-    elif user_input == 2:
+    elif user_input == "2":
         prompt = prompt2
-    elif user_input == 3:
+    elif user_input == "3":
         prompt = prompt3
     else:
         print("Invalid input. Please choose 1, 2, or 3.")
-
+        exit()
     # Get the model's response to the chosen prompt
     print("Thinking...")
     fullPrompt = "\"\"\"" + conversationCut + "\"\"\"\n" + prompt
@@ -164,7 +164,7 @@ def getHelp(user_input):
         if content is not None:
             full_string += content
             sock.SendData(full_string)
-            print(content)
+            print(content, end="")
     return full_string
 
 
@@ -176,7 +176,9 @@ i = 0
 sock.SendData("Project LUCID: Please Enter a Thought Command.")
 
 while True:
-    i = i+1
-    bruh = input("press a key to continue")
-    getHelp(bruh)
-    time.sleep(1)
+    input = sock.ReadReceivedData()
+    if input != None:
+        print("input", input)
+        getHelp(input)
+        time.sleep(1)
+    input = None
