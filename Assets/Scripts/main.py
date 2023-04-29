@@ -20,7 +20,7 @@ openai.api_key = key.key()
 # Define a function to get the model's response to a prompt
 def getChatResponse(prompt):
     response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
+    model="gpt-4",
     messages = [
             {"role": "system", "content": "You are Assistant. Assistant is listening to a conversation between two people, and is instructed to assist the user in conversation. The conversation is below:"},
             {"role": "user", "content": prompt}
@@ -124,9 +124,11 @@ def getLatestConversation():
     return conversation
 
 # Define the three different prompts
-prompt1 = "Summarize the latest important points into a short paragraph."
+prompt1 = "Summarize the entire conversation into a short paragraph."
 prompt2 = "Fact check the last 5 sentences. Please point out any possible assumptions or errors."
 prompt3 = "Ideate based on the last few sentences to assist the user in this conversation in a concise bulleted response between 75-100 words."
+prompt4 = "Define any terms in the last few sentences that may not have immediately obvious meanings. Provide these definitions in an easily readable bulleted list."
+prompt5 = "Summarize the last few sentences into a short paragraph."
 
 text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=3800, chunk_overlap=0)
 
@@ -145,6 +147,10 @@ def getHelp(user_input):
         prompt = prompt2
     elif user_input == "3":
         prompt = prompt3
+    elif user_input == "4":
+        prompt = prompt4
+    elif user_input == "5":
+        prompt = prompt5
     else:
         print("Invalid input. Please choose 1, 2, or 3.")
         exit()
@@ -162,6 +168,11 @@ def getHelp(user_input):
     ):
         content = chunk["choices"][0].get("delta", {}).get("content")
         if content is not None:
+            input = sock.ReadReceivedData()
+            if input != None:
+                print("got new prompt")
+                getHelp(input)
+                return "exited early"
             full_string += content
             sock.SendData(full_string)
             print(content, end="")
@@ -181,4 +192,3 @@ while True:
         print("input", input)
         getHelp(input)
         time.sleep(1)
-    input = None
