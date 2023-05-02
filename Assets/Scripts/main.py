@@ -136,6 +136,7 @@ counts = [0, 0, 0, 0, 0]
 
 def counter(user_input):
     labels = ["Long Summarize", "Fact Check", "Ideate", "Define Terms", "Short Summarize"]
+    user_input = int(user_input)
     if user_input >= 1 and user_input <= 5:
         counts[user_input - 1] += 1
     else:
