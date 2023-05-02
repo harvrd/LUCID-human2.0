@@ -4,7 +4,7 @@ import openai
 import time
 from langchain.text_splitter import CharacterTextSplitter
 import UdpComms as U
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import key
 
 # load_dotenv()
@@ -132,7 +132,18 @@ prompt5 = "Summarize the last few sentences into a short paragraph."
 
 text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=3800, chunk_overlap=0)
 
+counts = [0, 0, 0, 0, 0]
 
+def counter(user_input):
+    labels = ["Long Summarize", "Fact Check", "Ideate", "Define Terms", "Short Summarize"]
+    if user_input >= 1 and user_input <= 5:
+        counts[user_input - 1] += 1
+    else:
+        print("Invalid input")
+    with open("report.txt", "w") as f:
+        for i, label in enumerate(labels):
+            f.write(f"{label}: {counts[i]}\n")
+        
 def getHelp(user_input):
     # Get Current Conversation
     prompt=""
@@ -152,7 +163,7 @@ def getHelp(user_input):
     elif user_input == "5":
         prompt = prompt5
     else:
-        print("Invalid input. Please choose 1, 2, or 3.")
+        print("Invalid input")
         exit()
     # Get the model's response to the chosen prompt
     print("Thinking...")
@@ -190,5 +201,6 @@ while True:
     input = sock.ReadReceivedData()
     if input != None:
         print("input", input)
+        counter(input)
         getHelp(input)
         time.sleep(1)
