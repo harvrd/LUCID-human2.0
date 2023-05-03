@@ -133,19 +133,28 @@ prompt5 = "Summarize the last few sentences into a short paragraph."
 text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=3800, chunk_overlap=0)
 
 counts = [0, 0, 0, 0, 0]
-
+labels = ["Long Summarize", "Fact Check", "Ideate", "Define Terms", "Short Summarize"]
+   
 def counter(user_input):
-    labels = ["Long Summarize", "Fact Check", "Ideate", "Define Terms", "Short Summarize"]
-    user_input = int(user_input)
-    if user_input >= 1 and user_input <= 5:
-        counts[user_input - 1] += 1
+    if user_input == "1":
+        counts[0] += 1
+    elif user_input == "2":
+        counts[1] += 1
+    elif user_input == "3":
+        counts[2] += 1
+    elif user_input == "4":
+        counts[3] += 1
+    elif user_input == "5":
+        counts[4] += 1
     else:
         print("Invalid input")
-    with open("report.txt", "w") as f:
+        exit()
+    with open("Assets/Scripts/report.txt", "w") as f:
         for i, label in enumerate(labels):
             f.write(f"{label}: {counts[i]}\n")
-        
+
 def getHelp(user_input):
+    counter(user_input)
     # Get Current Conversation
     prompt=""
     conversation = getLatestConversation()
@@ -202,6 +211,6 @@ while True:
     input = sock.ReadReceivedData()
     if input != None:
         print("input", input)
-        counter(input)
         getHelp(input)
         time.sleep(1)
+

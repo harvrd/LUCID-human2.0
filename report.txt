@@ -2,5 +2,5 @@ Long Summarize: 0
 helloFact Check: 0
 helloIdeate: 0
 helloDefine Terms: 0
-helloShort Summarize: 3
+helloShort Summarize: 2
 hello
