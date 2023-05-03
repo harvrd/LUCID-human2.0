@@ -22,7 +22,7 @@ def getChatResponse(prompt):
     response = openai.ChatCompletion.create(
     model="gpt-4",
     messages = [
-            {"role": "system", "content": "You are Assistant. Assistant is listening to a conversation between two people, and is instructed to assist the user in conversation. The conversation is below:"},
+            {"role": "system", "content": "You are Assistant. Assistant is listening to a debate between two people, and is instructed to assist the user in conversation. The conversation is below:"},
             {"role": "user", "content": prompt}
             ]
     )
@@ -124,11 +124,11 @@ def getLatestConversation():
     return conversation
 
 # Define the three different prompts
-prompt1 = "Summarize the entire conversation into a short paragraph."
-prompt2 = "Fact check the last 5 sentences. Please point out any possible assumptions or errors."
-prompt3 = "Ideate based on the last few sentences to assist the user in this conversation in a concise bulleted response between 75-100 words."
-prompt4 = "Define any terms in the last few sentences that may not have immediately obvious meanings. Provide these definitions in an easily readable bulleted list."
-prompt5 = "Summarize the last few sentences into a short paragraph."
+prompt1 = "Summarize the entire conversation in a concise bulleted response between 65-85 words."
+prompt2 = "Please point out any possible assumptions or errors in the last few sentences. Respond in a concise bulleted response between 65-85 words."
+prompt3 = "Ideate based on the last few sentences to assist the user in this conversation in a concise bulleted response between 65-85 words."
+prompt4 = "Define any terms in the last few sentences that may not have immediately obvious meanings or aren't commonly known. Respond in a concise bulleted response between 65-85 words."
+prompt5 = "Summarize the last few sentences in a concise bulleted response between 65-85 words."
 
 text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=3800, chunk_overlap=0)
 

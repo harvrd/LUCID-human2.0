@@ -1,6 +1,5 @@
 Long Summarize: 0
-helloFact Check: 0
-helloIdeate: 0
-helloDefine Terms: 0
-helloShort Summarize: 3
-hello
+Fact Check: 4
+Ideate: 17
+Define Terms: 2
+Short Summarize: 10
