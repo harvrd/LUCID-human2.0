@@ -207,6 +207,7 @@ def getHelp(user_input):
 i = 0
 sock.SendData("Project LUCID: Please Enter a Thought Command.")
 
+print("Program started...")
 while True:
     input = sock.ReadReceivedData()
     if input != None:

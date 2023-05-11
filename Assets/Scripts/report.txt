@@ -1,5 +1,5 @@
 Long Summarize: 0
 Fact Check: 4
-Ideate: 17
-Define Terms: 2
-Short Summarize: 10
+Ideate: 14
+Define Terms: 3
+Short Summarize: 3
