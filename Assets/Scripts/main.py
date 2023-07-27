@@ -17,17 +17,6 @@ sock = U.UdpComms(udpIP="127.0.0.1", portTX=8000, portRX=8001, enableRX=True, su
 
 openai.api_key = key.key()
 
-# Define a function to get the model's response to a prompt
-def getChatResponse(prompt):
-    response = openai.ChatCompletion.create(
-    model="gpt-4",
-    messages = [
-            {"role": "system", "content": "You are Assistant. Assistant is listening to a debate between two people, and is instructed to assist the user in conversation. The conversation is below:"},
-            {"role": "user", "content": prompt}
-            ]
-    )
-    return response['choices'][0]['message']['content']
-
 def getLatestConversation():
     with open("Assets/Scripts/transcript.txt", "r") as f:
         conversation = f.read()
